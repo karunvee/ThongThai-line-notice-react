@@ -1,13 +1,38 @@
-body {
+@font-face {
+  font-family: 'CloudBold';
+  src: url('./static/font/Cloud-Sans-LightBold/Cloud-Bold.otf') format('truetype');
+}
+@font-face {
+  font-family: 'CloudRegular';
+  src: url('./static/font/Cloud-Sans-LightBold/Cloud-Light.otf') format('truetype');
+}
+@font-face {
+  font-family: 'PoppinsBold';
+  src: url('./static/font/Poppins/Poppins-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'PoppinsRegular';
+  src: url('./static/font/Poppins/Poppins-Regular.ttf') format('truetype');
+}
+*{
+  box-sizing: border-box;
+  font-family: 'PoppinsRegular', sans-serif;
+}
+:root{
+  --background-color: #ddecff;
+  --background-header-text: #414141;
+  --background-des-text: #525252;
+  --primary-color: #306dca;
+  --white-color: #ffffff;
+}
+body{
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  background-color: var(--background-color);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+a{
+  text-decoration: none;
+  list-style: none;
+  color: var(--text-color);
 }

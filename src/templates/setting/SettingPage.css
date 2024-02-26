@@ -1,0 +1,45 @@
+.SettingPage{
+    /* height: 100%; */
+    padding: 20px;
+    background-color: var(--white-color);
+}
+
+
+.DeviceManage .form-row{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.DeviceManage .form-row-action{
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+
+.Locations .header-table{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+.Locations .header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+
+@media screen and (max-width: 600px){
+    .Locations .header-table{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+    }
+}

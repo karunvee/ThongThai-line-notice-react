@@ -1,0 +1,46 @@
+.Navbar{
+    
+}
+.Navbar > h1, h2, h3, h4{
+    margin: 0;
+}
+.Navbar .header-nav{
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* background-color: var(--primary-color); */
+}
+.Navbar .header-nav .title{
+    display: flex;
+    align-items: center;
+}
+.Navbar .title-text{
+    padding: 5px 0 5px 0;
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+}
+.Navbar .title-text h3{
+    color: var(--background-header-text);
+}
+.Navbar .title-text span{
+    color: var(--background-des-text);
+}
+
+@media screen and (max-width: 600px){
+    .Navbar .title-text span{
+        display: none;
+    }
+}
+
+.body-content{
+    position: absolute;
+    top: 80px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin-left: var(--navbar-width);
+    transition: var(--trans-01);
+}
+
