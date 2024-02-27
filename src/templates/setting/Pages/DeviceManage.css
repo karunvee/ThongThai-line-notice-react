@@ -1,0 +1,26 @@
+.DeviceManage{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    gap: 20px;
+}
+
+.DeviceManage .form-row{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.DeviceManage .form-row-action{
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+@media screen and (max-width: 1000px){
+    .DeviceManage{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 50px;
+    }
+}

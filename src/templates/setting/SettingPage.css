@@ -4,20 +4,6 @@
     background-color: var(--white-color);
 }
 
-
-.DeviceManage .form-row{
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-.DeviceManage .form-row-action{
-    margin-top: 20px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-
 .Locations .header-table{
     display: flex;
     justify-content: space-between;

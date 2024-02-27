@@ -1,6 +1,12 @@
+import React, { useState } from 'react';
+
+import AddMessage from './AddDialog/AddMessage';
+
 function Messages() {
     return ( 
-        <h4>Messages</h4>
+        <div className='Messages'>
+            <AddMessage/>
+        </div>
      );
 }
 
