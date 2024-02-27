@@ -20,7 +20,9 @@ function HomePage() {
           console.log(error);
         })
     };
+    const handleOnClick = () => {
 
+    };
     useEffect(() => {
         if(!loaded){
             const location_id = localStorage.getItem(STORAGE_KEY_LOCATION);
@@ -34,7 +36,7 @@ function HomePage() {
             {data && (
                 data.map((message, index) =>
                     <Card key={message.id + index} sx={{height: 150}}>
-                        <CardActionArea sx={{height: "100%" }}>
+                        <CardActionArea sx={{height: "100%" }} onClick={handleOnClick}>
                             <CardContent>
                             <Typography gutterBottom variant="h5" component="div">
                                 {message.topic}
