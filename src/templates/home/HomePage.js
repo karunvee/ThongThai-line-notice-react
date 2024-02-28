@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './HomePage.css'
-import { Card, CardActionArea, CardContent, Typography } from '@mui/material';
+import { Card, CardActionArea, CardContent, Typography, colors } from '@mui/material';
 
 import { STORAGE_KEY_AUTH, STORAGE_KEY_LOCATION } from '../../Config';
+
+import MessageIcon from '@mui/icons-material/Message';
+
 function HomePage() {
     const [loaded, setLoaded] = useState(false);
     const [data, setData] = useState([]);
@@ -34,15 +37,24 @@ function HomePage() {
             {data && (
                 data.map((message, index) =>
                     <Card key={message.id + index} sx={{height: 150}}>
-                        <CardActionArea sx={{height: "100%" }}>
+                        <CardActionArea sx={{height: "100%", backgroundColor: 'var(--card-color)'}}>
                             <CardContent>
-                            <Typography gutterBottom variant="h5" component="div">
-                                {message.topic}
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                                {message.description}
-                            </Typography>
+                                <div style={{display: 'flex', color: 'var(--primary-color)', alignItems: 'center', gap: 6}}>
+                                <Typography variant="caption" display="block" >
+                                    Message
+                                </Typography>
+                                <MessageIcon fontSize='25'/>
+                                </div>
+                                <Typography gutterBottom variant="h5" component="div">
+                                            {message.topic}
+                                </Typography>
+                                <Typography variant="caption" display="block">
+                                    {message.description}
+                                </Typography>
+                                <span className='card-balloon1'></span>
+                                <span className='card-balloon2'></span>
                             </CardContent>
+                    
                         </CardActionArea>
                     </Card>
                 )

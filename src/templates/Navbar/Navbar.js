@@ -60,10 +60,10 @@ function Navbar({isLoggedIn, onLogout}) {
                     {isLoggedIn ? (
                         <Link onClick={handleLogout}>
                             <Button
-                                sx={{backgroundColor: 'var(--background-des-text)'}}
+                                sx={{color: 'var(--background-des-text)'}}
                                 component="label"
                                 role={undefined}
-                                variant="contained"
+                                variant="text"
                                 tabIndex={-1}
                                 startIcon={<LogoutIcon />}
                                 >

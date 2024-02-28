@@ -19,11 +19,12 @@
   font-family: 'PoppinsRegular', sans-serif;
 }
 :root{
-  --background-color: #ddecff;
+  --background-color: #ecebf5;
   --background-header-text: #414141;
   --background-des-text: #525252;
   --primary-color: #306dca;
   --white-color: #ffffff;
+  --card-balloon: #306eca32;
 }
 body{
   margin: 0;
@@ -35,4 +36,10 @@ a{
   text-decoration: none;
   list-style: none;
   color: var(--text-color);
+}
+
+.loading-bar{
+  top: 55px;
+  position: absolute;
+  width: 100%;
 }

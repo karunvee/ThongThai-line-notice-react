@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-
+import axios from 'axios';
 import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField } from '@mui/material';
+import {STORAGE_KEY_AUTH, STORAGE_KEY_LOCATION} from '../../../../Config';
+
+import { enqueueSnackbar } from 'notistack';
+
 import AddIcon from '@mui/icons-material/Add';
 
-function AddLineNotify() {
+function AddBuilding({onComplete}) {
     const [open, setOpen] = useState(false);
-
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -13,6 +16,28 @@ function AddLineNotify() {
     const handleClose = () => {
         setOpen(false);
     };
+
+    const handleSummit = (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget);
+        const formJson = Object.fromEntries(formData.entries());
+        const payload = {
+            building_name: formJson.building_name,
+        };
+        axios.post('/api/building/add/', payload, { headers: { Authorization: `Token ${localStorage.getItem(STORAGE_KEY_AUTH)}`}})
+        .then((res) => {
+            const variant = 'success';
+            enqueueSnackbar( `Success, added new message.`, { variant });
+
+            onComplete();
+        })
+        .catch((err) => {
+            console.log(err)
+            const variant = 'error';
+            enqueueSnackbar( `Error!!, ${err.message}.`, { variant });
+        })
+        handleClose();
+    }
     return ( 
         <React.Fragment>
         <Button onClick={handleClickOpen}
@@ -30,41 +55,32 @@ function AddLineNotify() {
           onClose={handleClose}
           PaperProps={{
             component: 'form',
-            onSubmit: (event) => {
-              event.preventDefault();
-              const formData = new FormData(event.currentTarget);
-              const formJson = Object.fromEntries(formData.entries());
-              const email = formJson.email;
-              console.log(email);
-              handleClose();
-            },
+            onSubmit: (event) => handleSummit(event),
           }}
         >
-          <DialogTitle>Subscribe</DialogTitle>
+          <DialogTitle>Add Building</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              To subscribe to this website, please enter your email address here. We
-              will send updates occasionally.
+              To specific exactly where is building inform the messages, please enter you building here.
             </DialogContentText>
             <TextField
-              autoFocus
-              required
-              margin="dense"
-              id="name"
-              name="email"
-              label="Email Address"
-              type="email"
-              fullWidth
-              variant="standard"
+                autoFocus
+                required
+                margin="dense"
+                id="building_name"
+                name="building_name"
+                label="Building Name"
+                fullWidth
+                variant="standard"
             />
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit">Subscribe</Button>
+            <Button type="submit" variant="contained" >Save</Button>
           </DialogActions>
         </Dialog>
       </React.Fragment>
      );
 }
 
-export default AddLineNotify;
+export default AddBuilding;

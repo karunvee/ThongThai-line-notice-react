@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField, IconButton} from '@mui/material';
-import {STORAGE_KEY_AUTH, STORAGE_KEY_LOCATION} from '../../../../Config';
+import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, IconButton} from '@mui/material';
+import {STORAGE_KEY_AUTH} from '../../../../Config';
 
 import { enqueueSnackbar } from 'notistack';
-
-import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-function DeleteLineNotify({onDelete}) {
+function DeleteMessage({data, onComplete}) {
     const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
@@ -22,12 +20,24 @@ function DeleteLineNotify({onDelete}) {
 
     const handleSummit = (e) => {
         e.preventDefault();
-        onDelete();
+        console.log('delete', data.id);
+        const token = localStorage.getItem(STORAGE_KEY_AUTH);
+        axios.delete('/api/message/delete/', { params: { message_id: data.id}, headers: { Authorization: `Token ${token}`}})
+        .then((res) => {
+            const variant = 'success';
+            enqueueSnackbar( `Success, ${res.data.detail}`, { variant });
+        })
+        .catch((err) => {
+            const variant = 'error';
+            enqueueSnackbar( `Error! ${err.message}.`, { variant });
+        })
+
+        onComplete();
         handleClose();
     }
     return ( 
         <React.Fragment>
-        <IconButton aria-label="edit" sx={{color: 'red'}} onClick={handleClickOpen}>
+        <IconButton aria-label="delete" sx={{color: 'red'}} onClick={handleClickOpen}>
             <DeleteIcon />
         </IconButton>
         <Dialog
@@ -38,10 +48,10 @@ function DeleteLineNotify({onDelete}) {
             onSubmit: (event) => handleSummit(event),
           }}
         >
-          <DialogTitle>Delete Group Line</DialogTitle>
+          <DialogTitle>Delete Message</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Are you sure you want to delete this group line?
+              Are you sure to delete <span  style={{ color: 'var(--primary-color)'}}>{data.topic}, {data.description}.</span>
             </DialogContentText>
           </DialogContent>
           <DialogActions>
@@ -53,4 +63,4 @@ function DeleteLineNotify({onDelete}) {
      );
 }
 
-export default DeleteLineNotify;
+export default DeleteMessage;

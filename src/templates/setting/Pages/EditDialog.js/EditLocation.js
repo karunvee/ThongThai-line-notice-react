@@ -7,47 +7,40 @@ import { enqueueSnackbar } from 'notistack';
 
 import EditIcon from '@mui/icons-material/Edit';
 
-function EditLineNotify({data, onEdit}) {
+function EditLocation({data, onComplete}) {
     const [open, setOpen] = useState(false);
-    const [groupName, setGroupName] = useState('');
-    const [tokenAccess, setTokenAccess] = useState('');
+    const [location, setLocation] = useState('');
+
     const handleClickOpen = () => {
         setOpen(true);
-        setGroupName(data.group_name);
-        setTokenAccess(data.token_access);
+        setLocation(data.location_name);
     };
-
+    const handleLocationChange = (e) => {
+      e.preventDefault();
+      setLocation(e.target.value);
+  }
     const handleClose = () => {
         setOpen(false);
     };
-
-    const handleGroupChange = (e) => {
-        e.preventDefault();
-        setGroupName(e.target.value);
-    }
-    const handleTokenChange = (e) => {
-        e.preventDefault();
-        setTokenAccess(e.target.value);
-    }
     const handleSummit = (e) => {
         e.preventDefault();
+        const token = localStorage.getItem(STORAGE_KEY_AUTH);
         const payload = {
-            config_id : data.id,
-            group_name : groupName,
-            token_access : tokenAccess
-        }
-        console.log('payload',payload);
+            location_id: data.id,
+            location_name: location,
+            floor_id: data.floor_id,
+        };
 
-        axios.put('/api/line/config/update/', payload, {headers: { Authorization: `Token ${localStorage.getItem(STORAGE_KEY_AUTH)}`}})
+        axios.put('/api/location/update/', payload, {headers: { Authorization: `Token ${token}`}})
         .then((res) => {
             const variant = 'success';
-            enqueueSnackbar( `Updated! id: ${data.id}, group: ${groupName}`, { variant });
+            enqueueSnackbar( `Updated! id: ${data.id}, group: ${location}`, { variant });
         })
         .catch((err) => {
             const variant = 'error';
             enqueueSnackbar( `Error! ${err.message}`, { variant });
         })
-        onEdit();
+        onComplete();
         handleClose();
     }
 
@@ -74,25 +67,13 @@ function EditLineNotify({data, onEdit}) {
                 autoFocus
                 required
                 margin="dense"
-                id="group_name"
-                name="group_name"
-                label="Group Name"
-                value={groupName}
+                id="topic"
+                name="topic"
+                label="Topic"
+                value={location}
                 fullWidth
                 variant="standard"
-                onChange={handleGroupChange}
-            />
-             <TextField
-                autoFocus
-                required
-                margin="dense"
-                id="token_access"
-                name="token_access"
-                label="Token Access"
-                value={tokenAccess}
-                fullWidth
-                variant="standard"
-                onChange={handleTokenChange}
+                onChange={handleLocationChange}
             />
           </DialogContent>
           <DialogActions>
@@ -104,4 +85,4 @@ function EditLineNotify({data, onEdit}) {
      );
 }
 
-export default EditLineNotify;
+export default EditLocation;

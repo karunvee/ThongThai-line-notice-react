@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField } from '@mui/material';
-import {STORAGE_KEY_AUTH, STORAGE_KEY_LOCATION} from '../../../../Config';
+import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField, IconButton } from '@mui/material';
+import {STORAGE_KEY_AUTH} from '../../../../Config';
 
 import { enqueueSnackbar } from 'notistack';
 
-import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
 
-function AddMessage({onComplete}) {
+function EditMessage({data, onComplete}) {
     const [open, setOpen] = useState(false);
     const [topic, setTopic] = useState('');
     const [description, setDescription] = useState('');
     const handleClickOpen = () => {
         setOpen(true);
+        setTopic(data.topic);
+        setDescription(data.description);
     };
 
     const handleClose = () => {
@@ -29,40 +31,30 @@ function AddMessage({onComplete}) {
     }
     const handleSummit = (e) => {
         e.preventDefault();
-        const formData = new FormData(e.currentTarget);
-        const formJson = Object.fromEntries(formData.entries());
-        const location_id = localStorage.getItem(STORAGE_KEY_LOCATION);
         const payload = {
-            location_id: location_id,
-            topic: formJson.topic,
-            description: formJson.description
-        };
-        axios.post('/api/message/add/', payload, { headers: { Authorization: `Token ${localStorage.getItem(STORAGE_KEY_AUTH)}`}})
+          message_id : data.id,
+          topic : topic,
+          description : description
+        }
+
+        axios.put('/api/message/update/', payload, {headers: { Authorization: `Token ${localStorage.getItem(STORAGE_KEY_AUTH)}`}})
         .then((res) => {
             const variant = 'success';
-            enqueueSnackbar( `Success, added new message.`, { variant });
-
-            onComplete();
+            enqueueSnackbar( `Updated! id: ${data.id}, group: ${topic}`, { variant });
         })
         .catch((err) => {
-            console.log(err)
             const variant = 'error';
-            enqueueSnackbar( `Error!!, ${err.message}.`, { variant });
+            enqueueSnackbar( `Error! ${err.message}`, { variant });
         })
+        onComplete();
         handleClose();
     }
+
     return ( 
         <React.Fragment>
-        <Button onClick={handleClickOpen}
-        component="label"
-        role={undefined}
-        variant="contained"
-        size='small'
-        tabIndex={-1}
-        startIcon={<AddIcon />}
-            >
-                Add
-        </Button>
+        <IconButton aria-label="delete" onClick={handleClickOpen}>
+                <EditIcon />
+        </IconButton>
         <Dialog
           open={open}
           onClose={handleClose}
@@ -71,10 +63,10 @@ function AddMessage({onComplete}) {
             onSubmit: (event) => handleSummit(event),
           }}
         >
-          <DialogTitle>Add Message</DialogTitle>
+          <DialogTitle>Edit Line Notify Group</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              To getting notification from this website, please enter your message detail here. We
+              To getting notification from this website, please enter your group name and token access here. We
               will send updates occasionally.
             </DialogContentText>
             <TextField
@@ -84,6 +76,7 @@ function AddMessage({onComplete}) {
                 id="topic"
                 name="topic"
                 label="Topic"
+                value={topic}
                 fullWidth
                 variant="standard"
                 onChange={handleTopicChange}
@@ -95,6 +88,7 @@ function AddMessage({onComplete}) {
                 id="description"
                 name="description"
                 label="Description"
+                value={description}
                 fullWidth
                 variant="standard"
                 onChange={handleDescChange}
@@ -109,4 +103,4 @@ function AddMessage({onComplete}) {
      );
 }
 
-export default AddMessage;
+export default EditMessage;

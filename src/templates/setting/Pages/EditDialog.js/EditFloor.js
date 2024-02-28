@@ -1,57 +1,54 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField } from '@mui/material';
+import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField, IconButton } from '@mui/material';
 import {STORAGE_KEY_AUTH} from '../../../../Config';
 
 import { enqueueSnackbar } from 'notistack';
 
-import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
 
-function AddLocation({floorId, onComplete, disabled}) {
+function EditFloor({data, onComplete}) {
     const [open, setOpen] = useState(false);
+    const [floor, setFloor] = useState('');
+
     const handleClickOpen = () => {
         setOpen(true);
+        setFloor(data.floor_name);
     };
-
+    const handleFloorChange = (e) => {
+      e.preventDefault();
+      setFloor(e.target.value);
+  }
     const handleClose = () => {
         setOpen(false);
     };
-
     const handleSummit = (e) => {
         e.preventDefault();
-        const formData = new FormData(e.currentTarget);
-        const formJson = Object.fromEntries(formData.entries());
+        const token = localStorage.getItem(STORAGE_KEY_AUTH);
         const payload = {
-          floor_id: floorId,
-          location_name: formJson.location_name,
+            floor_id: data.id,
+            floor_name: floor,
+            building_id: data.building_id,
         };
-        console.log(payload);
-        axios.post('/api/location/add/', payload, { headers: { Authorization: `Token ${localStorage.getItem(STORAGE_KEY_AUTH)}`}})
+
+        axios.put('/api/floor/update/', payload, {headers: { Authorization: `Token ${token}`}})
         .then((res) => {
             const variant = 'success';
-            enqueueSnackbar( `Success, added new message.`, { variant });
-
-            onComplete(floorId);
+            enqueueSnackbar( `Updated! id: ${data.id}, group: ${floor}`, { variant });
         })
         .catch((err) => {
-            console.log(err)
             const variant = 'error';
-            enqueueSnackbar( `Error!!, ${err.message}.`, { variant });
+            enqueueSnackbar( `Error! ${err.message}`, { variant });
         })
+        onComplete();
         handleClose();
     }
+
     return ( 
         <React.Fragment>
-        <Button onClick={handleClickOpen} disabled={disabled}
-        component="label"
-        role={undefined}
-        variant="contained"
-        size='small'
-        tabIndex={-1}
-        startIcon={<AddIcon />}
-            >
-                Add
-        </Button>
+        <IconButton aria-label="delete" onClick={handleClickOpen}>
+                <EditIcon />
+        </IconButton>
         <Dialog
           open={open}
           onClose={handleClose}
@@ -60,20 +57,23 @@ function AddLocation({floorId, onComplete, disabled}) {
             onSubmit: (event) => handleSummit(event),
           }}
         >
-          <DialogTitle>Add Location</DialogTitle>
+          <DialogTitle>Edit Line Notify Group</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              To specific exactly where is location inform the messages, please enter you location here.
+              To getting notification from this website, please enter your group name and token access here. We
+              will send updates occasionally.
             </DialogContentText>
             <TextField
                 autoFocus
                 required
                 margin="dense"
-                id="location_name"
-                name="location_name"
-                label="Location Name"
+                id="topic"
+                name="topic"
+                label="Topic"
+                value={floor}
                 fullWidth
                 variant="standard"
+                onChange={handleFloorChange}
             />
           </DialogContent>
           <DialogActions>
@@ -85,4 +85,4 @@ function AddLocation({floorId, onComplete, disabled}) {
      );
 }
 
-export default AddLocation;
+export default EditFloor;

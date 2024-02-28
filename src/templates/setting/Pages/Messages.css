@@ -1,0 +1,10 @@
+.Messages{
+
+}
+.Messages .header-table{
+    margin-bottom: 1cqmax;
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    justify-content: space-between;
+}

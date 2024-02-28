@@ -1,125 +1,197 @@
-import React, { useState } from 'react';
-import { Box, Typography,  MenuItem, Button, IconButton, Select, InputLabel, FormControl} from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Box, Typography,  MenuItem, Button, IconButton, Select, InputLabel, FormControl, LinearProgress} from '@mui/material';
 
 import { DataGrid } from '@mui/x-data-grid';
+import { STORAGE_KEY_AUTH } from '../../../Config';
+import axios from 'axios';
 
-import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+import AddBuilding from './AddDialog/AddBuilding';
+import AddFloor from './AddDialog/AddFloor';
+import AddLocation from './AddDialog/AddLocation';
 
-const currencies = [
-    {
-      value: 'USD',
-      label: 'Tower A, Floor 1',
-    },
-    {
-      value: 'EUR',
-      label: 'Tower A, Floor 1',
-    },
-    {
-      value: 'BTC',
-      label: 'Tower A, Floor 1',
-    },
-    {
-      value: 'JPY',
-      label: 'Tower A, Floor 1',
-    },
-  ];
+import DeleteBuilding from './DeleteDialog/DeleteBuilding';
+import DeleteFloor from './DeleteDialog/DeleteFloor';
+import DeleteLocation from './DeleteDialog/DeleteLocation';
 
-const building_colunms = [
-    { field: 'id', headerName: 'ID', width: 50},
-    { field: 'building_name', headerName: 'Building', width: 200},
-    {
-        field: 'action',
-        headerName: 'Action',
-        width: 120,
-        disableColumnFilter: true,
-        renderCell: (params) => (
-            <div>
-            <IconButton aria-label="delete">
-                <EditIcon />
-            </IconButton>
-            <IconButton aria-label="edit" sx={{color: 'red'}}>
-                <DeleteIcon />
-            </IconButton>
-            </div>
-        ),
-      },
-];
-const floor_colunms = [
-    { field: 'id', headerName: 'ID', width: 50},
-    { field: 'building_name', headerName: 'Building', width: 200},
-    {
-        field: 'action',
-        headerName: 'Action',
-        width: 120,
-        disableColumnFilter: true,
-        renderCell: (params) => (
-            <div>
-            <IconButton aria-label="delete">
-                <EditIcon />
-            </IconButton>
-            <IconButton aria-label="edit" sx={{color: 'red'}}>
-                <DeleteIcon />
-            </IconButton>
-            </div>
-        ),
-      },
-];
-const location_colunms = [
-    { field: 'id', headerName: 'ID', width: 50},
-    { field: 'building_name', headerName: 'Building', width: 200},
-    {
-        field: 'action',
-        headerName: 'Action',
-        width: 120,
-        disableColumnFilter: true,
-        renderCell: (params) => (
-            <div>
-            <IconButton aria-label="delete">
-                <EditIcon />
-            </IconButton>
-            <IconButton aria-label="edit" sx={{color: 'red'}}>
-                <DeleteIcon />
-            </IconButton>
-            </div>
-        ),
-      },
-];
+import EditBuilding from './EditDialog.js/EditBuilding';
+import EditFloor from './EditDialog.js/EditFloor';
+import EditLocation from './EditDialog.js/EditLocation';
 
 function Locations() {
-    const rows = [
+    const building_columns = [
+        { field: 'id', headerName: 'ID', width: 50},
+        { field: 'building_name', headerName: 'Building', width: 200},
         {
-            "id": 1,
-            "building_name": "Tower A"
-        },
-        {
-            "id": 2,
-            "building_name": "Tower B"
-        }
+            field: 'action',
+            headerName: 'Action',
+            width: 120,
+            disableColumnFilter: true,
+            renderCell: (params) => (
+                <div>
+                <EditBuilding data={{
+                    id: params.row.id,
+                    building_name: params.row.building_name
+                }} onComplete={() => setLoaded(false)}/>
+                <DeleteBuilding data={{
+                    id: params.row.id,
+                    building_name: params.row.building_name
+                }} onComplete={() => setLoaded(false)}/>
+                </div>
+            ),
+          },
     ];
+    const floor_columns = [
+        { field: 'id', headerName: 'ID', width: 50},
+        { field: 'floor_name', headerName: 'Floor', width: 200},
+        { field: 'buildingInfo', headerName: 'Building', width: 200},
+        {
+            field: 'action',
+            headerName: 'Action',
+            width: 120,
+            disableColumnFilter: true,
+            renderCell: (params) => (
+                <div>
+                <EditFloor data={{
+                    building_id: selectBuilding,
+                    id: params.row.id,
+                    floor_name: params.row.floor_name
+                }} onComplete={() => setLoadedF(false)}/>
+                <DeleteFloor data={{
+                    id: params.row.id,
+                    floor_name: params.row.floor_name
+                }} onComplete={() => setLoadedF(false)}/>
+                </div>
+            ),
+          },
+    ];
+    
+    const location_columns = [
+        { field: 'id', headerName: 'ID', width: 50},
+        { field: 'location_name', headerName: 'Location', width: 200},
+        { field: 'floorNumber', headerName: 'Building, Floor', width: 200},
+        {
+            field: 'action',
+            headerName: 'Action',
+            width: 120,
+            disableColumnFilter: true,
+            renderCell: (params) => (
+                <div>
+                <EditLocation data={{
+                    floor_id: selectFloor,
+                    id: params.row.id,
+                    location_name: params.row.location_name
+                }} onComplete={() => setLoadedL(false)}/>
+                <DeleteLocation data={{
+                    id: params.row.id,
+                    location_name: params.row.location_name
+                }} onComplete={() => setLoadedL(false)}/>
+                </div>
+            ),
+          },
+    ];
+
+    const [loaded, setLoaded] = useState(false);
+
+    const [loadedB, setLoadedB] = useState(false);
+    const [loadedF, setLoadedF] = useState(false);
+    const [loadedL, setLoadedL] = useState(false);
+
+    const [selectBuilding, setSelectBuilding] = useState('');
+    const [selectFloor, setSelectFloor] = useState('');
+
+    const [ buildingData, setBuildingData] = useState([]);
+    const [ floorData, setFloorData] = useState([]);
+    const [ locationData, setLocationData] = useState([]);
+
+    const fetchingBuildingData = () => {
+        const token = localStorage.getItem(STORAGE_KEY_AUTH);
+        axios.get('/api/building/list/', { headers: { Authorization: `Token ${token}`}})
+        .then((res) => {
+            if(res.status === 200){
+                console.log('fetchingBuildingData');
+                console.log(res.data.data);
+                setBuildingData(res.data.data);
+                setLoaded(true);
+                setLoadedB(true);
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }
+    const fetchingFloorData = (building_id) => {
+        const token = localStorage.getItem(STORAGE_KEY_AUTH);
+        axios.get('/api/floor/list/', { params: {building_id: building_id} ,headers: { Authorization: `Token ${token}`}})
+        .then((res) => {
+            setFloorData(res.data.data);
+            setLoadedF(true);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }
+    const fetchingLocationData = (floor_id) => {
+        const token = localStorage.getItem(STORAGE_KEY_AUTH);
+        axios.get('/api/location/list/', { params: {floor_id: floor_id} ,headers: { Authorization: `Token ${token}`}})
+        .then((res) => {
+            setLocationData(res.data.data);
+            setLoadedL(true);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }
+    const handleBuildingChange = (building_id) => {
+        setSelectBuilding(building_id);
+        fetchingFloorData(building_id);
+        console.log('handleBuildingChange', building_id);
+    }
+    const handleFloorChange = (floor_id) => {
+        setSelectFloor(floor_id);
+        fetchingLocationData(floor_id);
+        console.log('handleFloorChange', floor_id);
+    }
+    const handleClear = () => {
+        setFloorData([]);
+        setLocationData([]);
+        setSelectBuilding('');
+        setSelectFloor('');
+        setLoadedF(false);
+        setLoadedL(false);
+    }
+    useEffect(() => {
+        if(!loaded){
+            fetchingBuildingData();
+        }
+        if(selectBuilding !== '' && !loadedF){
+            console.log('refresh floor table');
+            fetchingFloorData(selectBuilding);
+        }
+        if(selectFloor !== '' && !loadedL){
+            console.log('refresh location table');
+            fetchingLocationData(selectFloor);
+        }
+    }, [loaded, loadedF, loadedL, selectBuilding, selectFloor]);
+
     return ( 
         <div className='Locations'>
             <div className='header-table' style={{marginTop: 0, marginBottom: 10}}>
                 <Typography variant="h6">
                     Building List
                 </Typography>
-                <Button
-                    component="label"
-                    role={undefined}
-                    variant="contained"
-                    tabIndex={-1}
-                    startIcon={<AddIcon />}
-                    >
-                        Add
+                <div>
+                <Button variant="text" size='small' onClick={handleClear} sx={{marginRight: 3}}>
+                        Clear
                 </Button>
+                <AddBuilding onComplete={fetchingBuildingData}/>
+                </div>
             </div>
-
+            {!loadedB ? (<LinearProgress className='loading-bar' />) : (<LinearProgress className='loading-bar' variant="determinate" value={100}/>)}
             <Box sx={{ height: '300px', width: '100%',  border: 0, borderRadius: '15px', boxShadow: 2, backgroundColor: '#fff'}}>
                 <DataGrid
                 sx={{border: 0}}
-                rows={rows}
-                columns={building_colunms}
+                rows={buildingData}
+                columns={building_columns}
                 initialState={{
                     pagination: {
                     paginationModel: {
@@ -145,36 +217,26 @@ function Locations() {
                         <Select
                             labelId="demo-select-small-label"
                             id="demo-select-small"
-                            // value={age}
+                            value={selectBuilding}
                             label="Building"
-                            // onChange={handleChange}
+                            onChange={(e) => handleBuildingChange(e.target.value)}
                         >
-                            <MenuItem value="">
-                            <em>None</em>
-                            </MenuItem>
-                            {currencies.map((option) => (
-                                <MenuItem key={option.value} value={option.value}>
-                                {option.label}
-                                </MenuItem>
-                            ))}
+                            {buildingData.map((option) => (
+                                    <MenuItem key={option.id+option.building_name} value={option.id}>
+                                    {option.building_name}
+                                    </MenuItem>
+                                ))}
                         </Select>
                     </FormControl>
                 </div>
-                <Button
-                    component="label"
-                    role={undefined}
-                    variant="contained"
-                    tabIndex={-1}
-                    startIcon={<AddIcon />}
-                    >
-                        Add
-                </Button>
+                <AddFloor buildingId={selectBuilding} onComplete={fetchingFloorData} disabled={selectBuilding === ''}/>
             </div>
+            {!loadedF ? (<LinearProgress className='loading-bar' />) : (<LinearProgress className='loading-bar' variant="determinate" value={100}/>)}
             <Box sx={{ height: '300px', width: '100%',  border: 0, borderRadius: '15px', boxShadow: 2, backgroundColor: '#fff'}}>
                 <DataGrid
                 sx={{border: 0}}
-                rows={rows}
-                columns={floor_colunms}
+                rows={floorData}
+                columns={floor_columns}
                 initialState={{
                     pagination: {
                     paginationModel: {
@@ -197,39 +259,30 @@ function Locations() {
                     </Typography>
                     <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
                     <InputLabel id="demo-select-small-label">Floor</InputLabel>
-                    <Select
+                    <Select disabled={selectBuilding===''}
                         labelId="demo-select-small-label"
                         id="demo-select-small"
-                        // value={age}
+                        value={selectFloor}
                         label="Floor"
-                        // onChange={handleChange}
+                        onChange={(e) => handleFloorChange(e.target.value)}
                     >
-                        <MenuItem value="">
-                        <em>None</em>
-                        </MenuItem>
-                        {currencies.map((option) => (
-                            <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                            </MenuItem>
+                        {floorData.map((option) => (
+                                    <MenuItem key={option.id+option.floor_name} value={option.id}>
+                                    {option.floor_name}
+                                    </MenuItem>
                         ))}
                     </Select>
                     </FormControl>
                 </div>
-                <Button
-                    component="label"
-                    role={undefined}
-                    variant="contained"
-                    tabIndex={-1}
-                    startIcon={<AddIcon />}
-                    >
-                        Add
-                </Button>
+                <AddLocation floorId={selectFloor} onComplete={fetchingLocationData} disabled={selectFloor === ''}/>
+
             </div>
+            {!loadedL ? (<LinearProgress className='loading-bar' />) : (<LinearProgress className='loading-bar' variant="determinate" value={100}/>)}
             <Box sx={{ height: '300px', width: '100%',  border: 0, borderRadius: '15px', boxShadow: 2, backgroundColor: '#fff'}}>
                 <DataGrid
                 sx={{border: 0}}
-                rows={rows}
-                columns={location_colunms}
+                rows={locationData}
+                columns={location_columns}
                 initialState={{
                     pagination: {
                     paginationModel: {
