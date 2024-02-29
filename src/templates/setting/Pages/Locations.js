@@ -144,6 +144,9 @@ function Locations() {
     const handleBuildingChange = (building_id) => {
         setSelectBuilding(building_id);
         fetchingFloorData(building_id);
+        setSelectFloor('');
+        setLocationData([]);
+        setLoadedL(false);
         console.log('handleBuildingChange', building_id);
     }
     const handleFloorChange = (floor_id) => {
