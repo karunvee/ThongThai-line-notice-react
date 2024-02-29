@@ -37,11 +37,13 @@ function Navbar({isLoggedIn, onLogout}) {
             }
         })
         .catch((err) => {
-          console.log(err);
+            console.log(err);
 
-          const variant = 'error';
-          enqueueSnackbar( `Error!!! ${err.message}`, { variant });
-
+            // const variant = 'error';
+            // enqueueSnackbar( `Error!!! ${err.message}`, { variant });
+            localStorage.removeItem(STORAGE_KEY_AUTH);
+            navigate('/');
+            onLogout();
         })
     
       };

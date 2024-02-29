@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import {STORAGE_KEY_AUTH} from './Config';
 
+import ProtectedRoute from './ProtectRoute';
 import Navbar from './templates/Navbar/Navbar';
 import HomePage from './templates/home/HomePage';
 import LoginPage from './templates/LoginPage/LoginPage';
@@ -43,7 +44,13 @@ function App() {
         <Routes>
             <Route path="/" element={<Navbar isLoggedIn={isLoggedIn} onLogout={handleLogout}/>}>
             <Route index element={<HomePage />} />
-            <Route path="/setting" element={<SettingPage />} />
+            <Route
+            path="/setting"
+            element={
+              <ProtectedRoute>
+                <SettingPage />
+              </ProtectedRoute>}
+            />
             <Route path="/login" element={<LoginPage isLoggedIn={isLoggedIn} onLogin={handleLoginPage}/>} />
             <Route path="*" element={<NoPage />} />
             </Route>

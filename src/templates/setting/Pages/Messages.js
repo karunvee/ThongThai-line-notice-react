@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import { DataGrid } from '@mui/x-data-grid';
-import { Box, Typography, Chip, Divider } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { STORAGE_KEY_AUTH, STORAGE_KEY_LOCATION } from '../../../Config';
 
 import './Messages.css';
@@ -11,8 +11,6 @@ import DeleteMessage from './DeleteDialog/DeleteMessage';
 import EditMessage from './EditDialog.js/EditMessage';
 import DeleteSubMessage from './DeleteDialog/DeleteSubMessage';
 
-import AddIcon from '@mui/icons-material/Add';
-import ClearIcon from '@mui/icons-material/Clear';
 function Messages() {
     const columns = [
         {

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './SettingPage.css';
+import axios from 'axios';
 
+import { STORAGE_KEY_AUTH } from '../../Config';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -48,6 +51,8 @@ function CustomTabPanel(props) {
 }
 
 function SettingPage() {
+    const navigate = useNavigate();
+
     const [location, setLocation] = useState(false);
     const [value, setValue] = React.useState(0);
 
@@ -58,6 +63,18 @@ function SettingPage() {
     useEffect(() => {
       const location_local = localStorage.getItem(STORAGE_KEY_LOCATION);
       setLocation(!!location_local);
+      if(localStorage.getItem(STORAGE_KEY_AUTH)){
+        axios.get('/api/check_authentication/', { headers: {Authorization: `Token ${localStorage.getItem(STORAGE_KEY_AUTH)}`}} )
+        .then((res) => {
+          console.log(res.data.detail);
+        })
+        .catch((err) => {
+          console.log(err);
+          localStorage.removeItem(STORAGE_KEY_AUTH);
+          navigate('/login');
+        })
+      }
+      
     }, [])
     return ( 
         <div className="SettingPage">

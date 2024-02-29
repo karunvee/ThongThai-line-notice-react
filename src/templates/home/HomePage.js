@@ -5,6 +5,8 @@ import { Card, CardActionArea, CardContent, Typography, colors } from '@mui/mate
 
 import { STORAGE_KEY_AUTH, STORAGE_KEY_LOCATION } from '../../Config';
 
+import { enqueueSnackbar } from 'notistack';
+
 import MessageIcon from '@mui/icons-material/Message';
 
 function HomePage() {
@@ -20,10 +22,13 @@ function HomePage() {
             setLoaded(true);
         })
         .catch(error => {
-          console.log(error);
+            console.log(error);
         })
     };
-
+    const handleSendMessage = (message) => {
+        const variant = 'success';
+        enqueueSnackbar( `Message [${message}] was sending 💬`, { variant });
+    }
     useEffect(() => {
         if(!loaded){
             const location_id = localStorage.getItem(STORAGE_KEY_LOCATION);
@@ -36,8 +41,8 @@ function HomePage() {
         <div className="HomePage">
             {data && (
                 data.map((message, index) =>
-                    <Card key={message.id + index} sx={{height: 150}}>
-                        <CardActionArea sx={{height: "100%", backgroundColor: 'var(--card-color)'}}>
+                    <Card key={message.id + index} sx={{height: 150}} >
+                        <CardActionArea sx={{height: "100%", backgroundColor: 'var(--card-color)'}} onClick={() => handleSendMessage(message.topic)}>
                             <CardContent>
                                 <div style={{display: 'flex', color: 'var(--primary-color)', alignItems: 'center', gap: 6}}>
                                 <Typography variant="caption" display="block" >
