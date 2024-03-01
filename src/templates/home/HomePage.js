@@ -25,9 +25,23 @@ function HomePage() {
             console.log(error);
         })
     };
-    const handleSendMessage = (message) => {
-        const variant = 'success';
-        enqueueSnackbar( `Message [${message}] was sending 💬`, { variant });
+    const handleSendMessage = (message, id) => {
+
+        const token = localStorage.getItem(STORAGE_KEY_AUTH);
+        const payload = {
+            message_id: id,
+            reporter: "unknown"
+        }
+        axios.post('/api/sending/message/', payload, { headers : {Authorization: `Token ${token}`}})
+        .then((res) => {
+            const variant = 'success';
+            enqueueSnackbar( `Message id: ${id} "${message}" was sending 💬`, { variant });
+        })
+        .catch((err) => {
+            const variant = 'error';
+            enqueueSnackbar( `Error! ${err.message}.`, { variant });
+        })
+
     }
     useEffect(() => {
         if(!loaded){
@@ -42,7 +56,7 @@ function HomePage() {
             {data && (
                 data.map((message, index) =>
                     <Card key={message.id + index} sx={{height: 150}} >
-                        <CardActionArea sx={{height: "100%", backgroundColor: 'var(--card-color)'}} onClick={() => handleSendMessage(message.topic)}>
+                        <CardActionArea sx={{height: "100%", backgroundColor: 'var(--card-color)'}} onClick={() => handleSendMessage(message.topic, message.id)}>
                             <CardContent>
                                 <div style={{display: 'flex', color: 'var(--primary-color)', alignItems: 'center', gap: 6}}>
                                 <Typography variant="caption" display="block" >
