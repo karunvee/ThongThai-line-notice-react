@@ -178,11 +178,11 @@ function DeviceManage() {
                 autoComplete="off"
                 >
                 <Typography variant="h6" gutterBottom>
-                    Device Location
+                    ตำแหน่งของอุปกรณ์
                 </Typography>
                 <div className="form-row">
                     <div style={{width: 100}}>
-                        <span>Building</span>
+                        <span>อาคาร</span>
                     </div>
                     <div>
                         <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
@@ -205,7 +205,7 @@ function DeviceManage() {
                 </div>
                 <div className="form-row">
                     <div style={{width: 100}}>
-                        <span>Floor</span>
+                        <span>ชั้น</span>
                     </div>
                     <div>
                         <FormControl sx={{ m: 1, minWidth: 150 }} size="small" disabled={disableFloor}>
@@ -228,7 +228,7 @@ function DeviceManage() {
                 </div>
                 <div className="form-row">
                     <div style={{width: 100}}>
-                        <span>Location</span>
+                        <span>ตำแหน่ง</span>
                     </div>
                     <div>
                         <FormControl sx={{ m: 1, minWidth: 150 }} size="small" disabled={disableLocation}>
@@ -264,7 +264,7 @@ function DeviceManage() {
             <div style={{ width: '100%'}}>
                 <div style={{display: 'flex', justifyContent: 'space-between',marginTop: 0, marginBottom: 10}}>
                     <Typography variant="h6" gutterBottom>
-                        Line Notify Group
+                        ตั้งค่าการแจ้งเตือนไลน์
                     </Typography>
                     <AddLineNotify onComplete={RefreshLineConfig} />
                 </div>          

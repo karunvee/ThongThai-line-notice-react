@@ -82,30 +82,28 @@ function SettingPage() {
             <Box sx={{ width: '100%' }}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs value={value} variant="scrollable" onChange={handleChange} aria-label="basic tabs example">
-                    <Tab label="Activity Record" {...a11yProps(0)} />
-                    <Tab label="Device Information" {...a11yProps(1)} />
-                    <Tab label="Location" {...a11yProps(2)} />
+                    {/* <Tab label="Activity Record" {...a11yProps(0)} /> */}
+                    <Tab label="อุปกรณ์" {...a11yProps(0)} />
                     {location && (
-                    <Tab label="Messages" {...a11yProps(3)} />
+                    <Tab label="ข้อความ" {...a11yProps(1)} />
                     )}
+                    <Tab label="สถานที่" {...a11yProps(2)} />
                     </Tabs>
                 </Box>
-                <CustomTabPanel value={value} index={0}>
+                {/* <CustomTabPanel value={value} index={0}>
                     <ActivityRecord/>
-                </CustomTabPanel>
-                <CustomTabPanel value={value} index={1}>
+                </CustomTabPanel> */}
+                <CustomTabPanel value={value} index={0}>
                     <DeviceManage/>
                 </CustomTabPanel>
-                <CustomTabPanel value={value} index={2}>
-                    <Locations/>
-                </CustomTabPanel>
-
                 {location && (
-                  <CustomTabPanel value={value} index={3}>
+                  <CustomTabPanel value={value} index={1}>
                     <Messages/>
                   </CustomTabPanel>
                     )}
-
+                <CustomTabPanel value={value} index={2}>
+                    <Locations/>
+                </CustomTabPanel>
             </Box>
         </div>
      );

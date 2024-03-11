@@ -180,7 +180,7 @@ function Locations() {
         <div className='Locations'>
             <div className='header-table' style={{marginTop: 0, marginBottom: 10}}>
                 <Typography variant="h6">
-                    Building List
+                    อาคาร
                 </Typography>
                 <div>
                 <Button variant="text" size='small' onClick={handleClear} sx={{marginRight: 3}}>
@@ -213,7 +213,7 @@ function Locations() {
             <div className='header-table'>
                 <div className='header'>
                     <Typography variant="h6" sx={{textWrap: "nowrap"}}>
-                        Floor List
+                       ชั้น
                     </Typography>
                     <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
                         <InputLabel id="demo-select-small-label">Building</InputLabel>
@@ -258,7 +258,7 @@ function Locations() {
             <div className='header-table'>
                 <div className='header'>
                     <Typography variant="h6" sx={{textWrap: "nowrap"}}>
-                        Location List
+                        ตำแหน่ง
                     </Typography>
                     <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
                     <InputLabel id="demo-select-small-label">Floor</InputLabel>

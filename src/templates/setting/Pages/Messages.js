@@ -84,7 +84,7 @@ function Messages() {
             <div className='container'>
                 <div className='header-table'>
                     <Typography variant="h6" sx={{textWrap: "nowrap"}}>
-                    Messages
+                    ข้อความทั้งหมด
                     </Typography>
                     <AddMessage onComplete={handleComplete}/>
                 </div>
