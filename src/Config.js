@@ -1,4 +1,4 @@
-const BASE_URL = "http://192.168.1.155:8000";
+const BASE_URL = "SLN_UrlBackEndServer";
 const STORAGE_KEY_AUTH = 'SLN_AuthToken';
 const STORAGE_KEY_BUILDING = 'buildingData';
 const STORAGE_KEY_FLOOR = 'floorData';

@@ -7,7 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import axios from 'axios';
 import {BASE_URL} from './Config';
 
-axios.defaults.baseURL = BASE_URL;
+axios.defaults.baseURL = localStorage.getItem(BASE_URL);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

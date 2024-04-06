@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './HomePage.css'
-import { Card, CardActionArea, CardContent, Typography,  Dialog, DialogTitle, Grid, DialogContent, DialogActions, Button, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { Card, CardActionArea, CardContent, TextField, Typography,  Dialog, DialogTitle, Grid, DialogContent, DialogContentText, DialogActions, Button, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -104,6 +104,7 @@ function HomePage() {
         setSubMessageId(sub_message);
         console.log('sub_message', sub_message);
     }
+    
     return ( 
         <div className="HomePage">            
             {data && (
