@@ -62,9 +62,11 @@ function Navbar({isLoggedIn, onLogout}) {
     useEffect(() => {
         if(!load){
             let url = localStorage.getItem(BASE_URL);
-            url = url.slice(7).split(':')[0];
-            setUrlServer(url);
-            console.log('url', url);
+            if(url){
+                url = url.slice(7).split(':')[0];
+                setUrlServer(url);
+                console.log('url', url);
+            }
             setLoad(true);
         }
     }, [load])
