@@ -39,6 +39,8 @@ function DeviceManage() {
           },
     ];
 
+    const [isFullScreen, setIsFullScreen] = useState(false);
+
     const [loaded, setLoaded] = useState(false);
     const [token, setToken] = useState(localStorage.getItem(STORAGE_KEY_AUTH));
     const [groupData, setGroupData] = useState([]);
@@ -166,7 +168,33 @@ function DeviceManage() {
         }
     }, [loaded, token]);
 
-
+    const handleFullScreenToggle = () => {
+        if (!isFullScreen) {
+        // Enter full screen mode
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen();
+        } else if (document.documentElement.mozRequestFullScreen) { // Firefox
+            document.documentElement.mozRequestFullScreen();
+        } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
+            document.documentElement.webkitRequestFullscreen();
+        } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
+            document.documentElement.msRequestFullscreen();
+        }
+        } else {
+        // Exit full screen mode
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) { // Firefox
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) { // IE/Edge
+            document.msExitFullscreen();
+        }
+        }
+        // Update state to reflect full screen mode
+        setIsFullScreen(!isFullScreen);
+    };
     return ( 
         <div className="DeviceManage">
             <Box
@@ -260,6 +288,12 @@ function DeviceManage() {
                         Save
                     </Button>
                 </div>
+                <Button variant="contained" size="medium" fullWidth onClick={handleFullScreenToggle} sx={{marginTop: '20px'}} color={isFullScreen ? 'error' : 'primary'}>
+                        {
+                            isFullScreen ? ("Exit Full Screen"):("Full Screen")
+                        }
+                       
+                </Button>
             </Box>
             <div style={{ width: '100%'}}>
                 <div style={{display: 'flex', justifyContent: 'space-between',marginTop: 0, marginBottom: 10}}>
