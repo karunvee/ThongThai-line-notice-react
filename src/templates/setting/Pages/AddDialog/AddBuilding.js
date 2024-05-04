@@ -48,7 +48,7 @@ function AddBuilding({onComplete}) {
         tabIndex={-1}
         startIcon={<AddIcon />}
             >
-                Add
+                เพิ่ม
         </Button>
         <Dialog
           open={open}
@@ -58,10 +58,10 @@ function AddBuilding({onComplete}) {
             onSubmit: (event) => handleSummit(event),
           }}
         >
-          <DialogTitle>Add Building</DialogTitle>
+          <DialogTitle>เพิ่มข้อมูลอาคาร</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              To specific exactly where is building inform the messages, please enter you building here.
+              สำหรับระบุตำแหน่งของอาคารในการส่งข้อความ โปรดกรอกข้อมูลด้านล่าง
             </DialogContentText>
             <TextField
                 autoFocus
@@ -69,14 +69,14 @@ function AddBuilding({onComplete}) {
                 margin="dense"
                 id="building_name"
                 name="building_name"
-                label="Building Name"
+                label="ชื่ออาคาร"
                 fullWidth
                 variant="standard"
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit" variant="contained" >Save</Button>
+            <Button onClick={handleClose}>ยกเลิก</Button>
+            <Button type="submit" variant="contained" >บันทึก</Button>
           </DialogActions>
         </Dialog>
       </React.Fragment>

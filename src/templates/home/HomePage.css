@@ -23,8 +23,8 @@
     width: 110px;
     border-radius: 50%;
     background-color: var(--card-balloon);
-    animation: infinite 2s explore ease-in-out;
-    animation-direction: alternate-reverse;
+    /* animation: infinite 2s explore ease-in-out; */
+    /* animation-direction: alternate-reverse; */
 }
 @keyframes explore {
     from {

@@ -57,11 +57,10 @@ function EditFloor({data, onComplete}) {
             onSubmit: (event) => handleSummit(event),
           }}
         >
-          <DialogTitle>Edit Line Notify Group</DialogTitle>
+          <DialogTitle>แก้ไขข้อมูลชั้น</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              To getting notification from this website, please enter your group name and token access here. We
-              will send updates occasionally.
+            สำหรับระบุตำแหน่งของชั้นในการส่งข้อความ โปรดกรอกข้อมูลด้านล่าง
             </DialogContentText>
             <TextField
                 autoFocus
@@ -69,7 +68,7 @@ function EditFloor({data, onComplete}) {
                 margin="dense"
                 id="topic"
                 name="topic"
-                label="Topic"
+                label="ชื่อชั้น"
                 value={floor}
                 fullWidth
                 variant="standard"
@@ -77,8 +76,8 @@ function EditFloor({data, onComplete}) {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit" variant="contained" >Save</Button>
+            <Button onClick={handleClose}>ยกเลิก</Button>
+            <Button type="submit" variant="contained" >บันทึก</Button>
           </DialogActions>
         </Dialog>
       </React.Fragment>

@@ -57,11 +57,10 @@ function EditLocation({data, onComplete}) {
             onSubmit: (event) => handleSummit(event),
           }}
         >
-          <DialogTitle>Edit Line Notify Group</DialogTitle>
+          <DialogTitle>แก้ไขตำแหน่ง</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              To getting notification from this website, please enter your group name and token access here. We
-              will send updates occasionally.
+            สำหรับระบุตำแหน่งในการส่งข้อความ โปรดกรอกข้อมูลด้านล่าง            
             </DialogContentText>
             <TextField
                 autoFocus
@@ -69,7 +68,7 @@ function EditLocation({data, onComplete}) {
                 margin="dense"
                 id="topic"
                 name="topic"
-                label="Topic"
+                label="ชื่อสถานที่"
                 value={location}
                 fullWidth
                 variant="standard"
@@ -77,8 +76,8 @@ function EditLocation({data, onComplete}) {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit" variant="contained" >Save</Button>
+            <Button onClick={handleClose}>ยกเลิก</Button>
+            <Button type="submit" variant="contained" >บันทึก</Button>
           </DialogActions>
         </Dialog>
       </React.Fragment>

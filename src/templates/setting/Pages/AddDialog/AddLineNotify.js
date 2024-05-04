@@ -62,7 +62,7 @@ function AddLineNotify({onComplete}) {
         tabIndex={-1}
         startIcon={<AddIcon />}
             >
-                Add
+                เพิ่ม
         </Button>
         <Dialog
           open={open}
@@ -72,11 +72,10 @@ function AddLineNotify({onComplete}) {
             onSubmit: (event) => handleSummit(event),
           }}
         >
-          <DialogTitle>Add Line Notify Group</DialogTitle>
+          <DialogTitle>เพิ่มข้อมูลการแจ้งเตือนของ LINE</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              To getting notification from this website, please enter your group name and token access here. We
-              will send updates occasionally.
+             โปรดใส่ชื่อของกลุ่มแชท และ token ของกลุ่มแชทนั้นๆ เพื่อที่ระบบจะสามารถส่งข้อความไปยังกลุ่มแชทนั้นๆได้
             </DialogContentText>
             <TextField
                 autoFocus
@@ -84,7 +83,7 @@ function AddLineNotify({onComplete}) {
                 margin="dense"
                 id="group_name"
                 name="group_name"
-                label="Group Name"
+                label="ชื่อกลุ่มแชท"
                 fullWidth
                 variant="standard"
                 onChange={handleGroupChange}
@@ -102,8 +101,8 @@ function AddLineNotify({onComplete}) {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit" variant="contained" >Save</Button>
+            <Button onClick={handleClose}>ยกเลิก</Button>
+            <Button type="submit" variant="contained" >บันทึก</Button>
           </DialogActions>
         </Dialog>
       </React.Fragment>

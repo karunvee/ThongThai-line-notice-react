@@ -64,11 +64,10 @@ function EditLineNotify({data, onEdit}) {
             onSubmit: (event) => handleSummit(event),
           }}
         >
-          <DialogTitle>Edit Line Notify Group</DialogTitle>
+          <DialogTitle>แก้ไขข้อมูลการแจ้งเตือนของ LINE</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              To getting notification from this website, please enter your group name and token access here. We
-              will send updates occasionally.
+            โปรดใส่ชื่อของกลุ่มแชท และ token ของกลุ่มแชทนั้นๆ เพื่อที่ระบบจะสามารถส่งข้อความไปยังกลุ่มแชทนั้นๆได้
             </DialogContentText>
             <TextField
                 autoFocus
@@ -76,7 +75,7 @@ function EditLineNotify({data, onEdit}) {
                 margin="dense"
                 id="group_name"
                 name="group_name"
-                label="Group Name"
+                label="ชื่อกลุ่มแชท"
                 value={groupName}
                 fullWidth
                 variant="standard"
@@ -96,8 +95,8 @@ function EditLineNotify({data, onEdit}) {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit" variant="contained" >Save</Button>
+            <Button onClick={handleClose}>ยกเลิก</Button>
+            <Button type="submit" variant="contained" >บันทึก</Button>
           </DialogActions>
         </Dialog>
       </React.Fragment>

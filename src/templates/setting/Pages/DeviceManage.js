@@ -17,7 +17,7 @@ import DeleteLineNotify from './DeleteDialog/DeleteLineNotify';
 function DeviceManage() {
     const columns = [
         { field: 'id', headerName: 'ID', width: 50},
-        { field: 'group_name', headerName: 'Group Name', width: 200},
+        { field: 'group_name', headerName: 'ชื่อกลุ่ม', width: 200},
         { field: 'token_access', headerName: 'Token Access', width: 300},
         {
             field: 'action',
@@ -165,6 +165,10 @@ function DeviceManage() {
             });
 
             RefreshLineConfig();
+
+            if( document.fullscreenElement ) {
+                setIsFullScreen(true);
+            }
         }
     }, [loaded, token]);
 
@@ -200,7 +204,7 @@ function DeviceManage() {
             <Box
                 component="form"
                 sx={{
-                    '& .MuiTextField-root': { m: 1, width: '25ch' },
+                    '& .MuiTextField-root': { m: 1, width: '25ch' }, width: '470px'
                 }}
                 noValidate
                 autoComplete="off"
@@ -213,8 +217,8 @@ function DeviceManage() {
                         <span>อาคาร</span>
                     </div>
                     <div>
-                        <FormControl sx={{ m: 1, minWidth: 150 }} size="small">
-                            <InputLabel id="Building-select-small-label">Building</InputLabel>
+                        <FormControl sx={{ m: 1, minWidth: 200 }} size="small">
+                            <InputLabel id="Building-select-small-label">อาคาร</InputLabel>
                             <Select
                                 labelId="Building-select-small-label"
                                 id="Building-select-small"
@@ -236,8 +240,8 @@ function DeviceManage() {
                         <span>ชั้น</span>
                     </div>
                     <div>
-                        <FormControl sx={{ m: 1, minWidth: 150 }} size="small" disabled={disableFloor}>
-                            <InputLabel id="Floor-select-small-label">Floor</InputLabel>
+                        <FormControl sx={{ m: 1, minWidth: 200 }} size="small" disabled={disableFloor}>
+                            <InputLabel id="Floor-select-small-label">ชั้น</InputLabel>
                             <Select
                                 labelId="Floor-select-small-label"
                                 id="Floor-select-small"
@@ -259,8 +263,8 @@ function DeviceManage() {
                         <span>ตำแหน่ง</span>
                     </div>
                     <div>
-                        <FormControl sx={{ m: 1, minWidth: 150 }} size="small" disabled={disableLocation}>
-                            <InputLabel id="Location-select-small-label">Location</InputLabel>
+                        <FormControl sx={{ m: 1, minWidth: 200 }} size="small" disabled={disableLocation}>
+                            <InputLabel id="Location-select-small-label">ตำแหน่ง</InputLabel>
                             <Select
                                 labelId="Location-select-small-label"
                                 id="Location-select-small"
@@ -278,19 +282,19 @@ function DeviceManage() {
                     </div>
                 </div>
                 <div className="form-row-action">
-                    <Button variant="text" size="medium" onClick={handleLocationReset}>
-                        Reset
+                    <Button variant="outlined" size="medium" onClick={handleLocationReset}>
+                        ล้างการตั้งค่า
                     </Button>
                     <Button variant="outlined" size="medium" onClick={handleLocationCancel}>
-                        Cancel
+                        เรียกคืนตั้งค่า
                     </Button>
-                    <Button variant="contained" size="medium" onClick={handleLocationSave}>
-                        Save
+                    <Button variant="contained" size="medium" onClick={handleLocationSave} sx={{height: '100%'}}>
+                        บันทึก
                     </Button>
                 </div>
                 <Button variant="contained" size="medium" fullWidth onClick={handleFullScreenToggle} sx={{marginTop: '20px'}} color={isFullScreen ? 'error' : 'primary'}>
                         {
-                            isFullScreen ? ("Exit Full Screen"):("Full Screen")
+                            isFullScreen ? ("ออกจากเต็มจอ"):("ขยายเต็มจอ")
                         }
                        
                 </Button>

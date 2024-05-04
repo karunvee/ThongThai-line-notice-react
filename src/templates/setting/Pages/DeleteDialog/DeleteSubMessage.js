@@ -89,10 +89,10 @@ export default function DeleteSubMessage({messageId, data, onComplete}) {
             onSubmit: (event) => handleAddSummitDialog(event),
           }}
         >
-          <DialogTitle>Add Sub Message</DialogTitle>
+          <DialogTitle>เพิ่มข้อความย่อย</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              To specific the detail of line notify message, please enter your detail here.
+              ระบุข้อความย่อยด้านล่าง
             </DialogContentText>
             <TextField
                 autoFocus
@@ -100,15 +100,15 @@ export default function DeleteSubMessage({messageId, data, onComplete}) {
                 margin="dense"
                 id="sub_message"
                 name="sub_message"
-                label="Sub Message"
+                label="ข้อความย่อย"
                 fullWidth
                 variant="standard"
                 // onChange={handleSummitDialog}
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleAddDialogClose}>Cancel</Button>
-            <Button type="submit" variant='contained'>Save</Button>
+            <Button onClick={handleAddDialogClose}>ยกเลิก</Button>
+            <Button type="submit" variant='contained'>บันทึก</Button>
           </DialogActions>
         </Dialog>
     </React.Fragment>
@@ -123,15 +123,15 @@ export default function DeleteSubMessage({messageId, data, onComplete}) {
                 onSubmit: (event) => handleDeleteSummitDialog(event),
             }}
             >
-            <DialogTitle>Delete Sub Message</DialogTitle>
+            <DialogTitle>ลบข้อความย่อย</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                To specific the detail of line notify message, please enter your detail here.
+                คุณต้องการลบข้อความย่อยนี้ใช่หรือไม่?
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleDeleteDialogClose}>Cancel</Button>
-                <Button type="submit" variant="contained" sx={{backgroundColor: "red"}} >Delete</Button>
+                <Button onClick={handleDeleteDialogClose}>ยกเลิก</Button>
+                <Button type="submit" variant="contained" sx={{backgroundColor: "red"}} >ยืนยัน</Button>
             </DialogActions>
             </Dialog>
         </React.Fragment>
@@ -143,7 +143,7 @@ export default function DeleteSubMessage({messageId, data, onComplete}) {
         <Button
             variant="contained" size='small'
             onClick={handleClick}>
-            Show
+            แสดง
         </Button>
         <Menu
             anchorEl={anchorEl}
@@ -158,10 +158,10 @@ export default function DeleteSubMessage({messageId, data, onComplete}) {
             horizontal: 'left',
             }}
         >
-            <MenuItem onClick={handleAdd}> <AddCircleOutlineIcon sx={{fontSize: '15px', marginRight: '5px'}}/>Add New</MenuItem>
+            <MenuItem onClick={handleAdd}> <AddCircleOutlineIcon sx={{fontSize: '15px', marginRight: '5px'}}/>เพิ่มใหม่</MenuItem>
             <Divider/>
             {data && data.map((item, index) => 
-            <Tooltip title="Click to Delete" placement="left" key={item.id}>
+            <Tooltip title="คลิกเพื่อลบ" placement="left" key={item.id}>
                 <MenuItem onClick={() => handleOnDelete(item.id)} key={item.id}> 
                     <DeleteIcon sx={{fontSize: '15px', marginRight: '5px'}} key={item.id}/>
                     <Divider orientation="vertical" variant="middle" flexItem sx={{margin: '5px 5px 5px 0'}}/>

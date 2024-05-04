@@ -20,10 +20,10 @@ import EditLocation from './EditDialog.js/EditLocation';
 function Locations() {
     const building_columns = [
         { field: 'id', headerName: 'ID', width: 50},
-        { field: 'building_name', headerName: 'Building', width: 200},
+        { field: 'building_name', headerName: 'อาคาร', width: 200},
         {
             field: 'action',
-            headerName: 'Action',
+            headerName: 'จัดการ',
             width: 120,
             disableColumnFilter: true,
             renderCell: (params) => (
@@ -42,11 +42,11 @@ function Locations() {
     ];
     const floor_columns = [
         { field: 'id', headerName: 'ID', width: 50},
-        { field: 'floor_name', headerName: 'Floor', width: 200},
-        { field: 'buildingInfo', headerName: 'Building', width: 200},
+        { field: 'floor_name', headerName: 'ชั้น', width: 200},
+        { field: 'buildingInfo', headerName: 'อาคาร', width: 200},
         {
             field: 'action',
-            headerName: 'Action',
+            headerName: 'จัดการ',
             width: 120,
             disableColumnFilter: true,
             renderCell: (params) => (
@@ -67,11 +67,11 @@ function Locations() {
     
     const location_columns = [
         { field: 'id', headerName: 'ID', width: 50},
-        { field: 'location_name', headerName: 'Location', width: 200},
-        { field: 'floorNumber', headerName: 'Building, Floor', width: 200},
+        { field: 'location_name', headerName: 'ตำแหน่ง', width: 200},
+        { field: 'floorNumber', headerName: 'อาคาร, ชั้น', width: 200},
         {
             field: 'action',
-            headerName: 'Action',
+            headerName: 'จัดการ',
             width: 120,
             disableColumnFilter: true,
             renderCell: (params) => (
@@ -184,7 +184,7 @@ function Locations() {
                 </Typography>
                 <div>
                 <Button variant="text" size='small' onClick={handleClear} sx={{marginRight: 3}}>
-                        Clear
+                        ล้าง
                 </Button>
                 <AddBuilding onComplete={fetchingBuildingData}/>
                 </div>
@@ -216,7 +216,7 @@ function Locations() {
                        ชั้น
                     </Typography>
                     <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                        <InputLabel id="demo-select-small-label">Building</InputLabel>
+                        <InputLabel id="demo-select-small-label">อาคาร</InputLabel>
                         <Select
                             labelId="demo-select-small-label"
                             id="demo-select-small"
@@ -261,7 +261,7 @@ function Locations() {
                         ตำแหน่ง
                     </Typography>
                     <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                    <InputLabel id="demo-select-small-label">Floor</InputLabel>
+                    <InputLabel id="demo-select-small-label">ชั้น</InputLabel>
                     <Select disabled={selectBuilding===''}
                         labelId="demo-select-small-label"
                         id="demo-select-small"

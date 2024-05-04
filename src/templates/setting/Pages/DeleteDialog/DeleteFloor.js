@@ -48,15 +48,15 @@ function DeleteFloor({data, onComplete}) {
             onSubmit: (event) => handleSummit(event),
           }}
         >
-          <DialogTitle>Delete Floor</DialogTitle>
+          <DialogTitle>ลบข้อมูลชั้น</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Are you sure to delete <span  style={{ color: 'var(--primary-color)'}}>{data.floor_name}.</span>
+            คุณต้องการลบข้อมูลนี้ใช่หรือไม่? <span  style={{ color: 'var(--primary-color)'}}>{data.floor_name}.</span>
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit" variant="contained" sx={{backgroundColor: "red"}} >Delete</Button>
+            <Button onClick={handleClose}>ยกเลิก</Button>
+            <Button type="submit" variant="contained" sx={{backgroundColor: "red"}} >ยืนยัน</Button>
           </DialogActions>
         </Dialog>
       </React.Fragment>

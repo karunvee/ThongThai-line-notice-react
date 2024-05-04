@@ -48,15 +48,15 @@ function DeleteMessage({data, onComplete}) {
             onSubmit: (event) => handleSummit(event),
           }}
         >
-          <DialogTitle>Delete Message</DialogTitle>
+          <DialogTitle>ลบข้อความ</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Are you sure to delete <span  style={{ color: 'var(--primary-color)'}}>{data.topic}, {data.description}.</span>
+            คุณต้องการลบข้อมูลนี้ใช่หรือไม่? <span  style={{ color: 'var(--primary-color)'}}>{data.topic}, {data.description}.</span>
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit" variant="contained" sx={{backgroundColor: "red"}} >Delete</Button>
+            <Button onClick={handleClose}>ยกเลิก</Button>
+            <Button type="submit" variant="contained" sx={{backgroundColor: "red"}} >ยืนยัน</Button>
           </DialogActions>
         </Dialog>
       </React.Fragment>

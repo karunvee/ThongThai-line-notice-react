@@ -36,6 +36,7 @@ function Navbar({isLoggedIn, onLogout}) {
         .then((res) => {
             if(res.status === 200 || res.status === 201 ){
                 localStorage.removeItem(STORAGE_KEY_AUTH);
+                setAreHome(true);
                 navigate('/');
                 onLogout();
             }
@@ -62,12 +63,16 @@ function Navbar({isLoggedIn, onLogout}) {
     useEffect(() => {
         if(!load){
             let url = localStorage.getItem(BASE_URL);
+            console.log('url', url);
             if(url){
-                url = url.slice(7).split(':')[0];
-                setUrlServer(url);
-                console.log('url', url);
+                let _url = url.slice(7).split(':')[0];
+                setUrlServer(_url);
+                console.log('_url', _url);
             }
             setLoad(true);
+            if(window.location.pathname === '/setting'){
+                setAreHome(false);
+            }
         }
     }, [load])
     const DialogSetUrlServer = (

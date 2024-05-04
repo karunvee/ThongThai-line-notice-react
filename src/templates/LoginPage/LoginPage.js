@@ -4,9 +4,14 @@ import axios from 'axios';
 
 
 import './LoginPage.css';
-import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, Stack, TextField, Typography } from '@mui/material';
+import { Button, CircularProgress, Dialog, DialogActions, 
+    DialogContent, DialogTitle, Stack, TextField, Typography,
+    FormControl, InputLabel, OutlinedInput, InputAdornment, IconButton} from '@mui/material';
 
-import {STORAGE_KEY_AUTH} from '../../Config';
+import {STORAGE_KEY_AUTH, BASE_URL} from '../../Config';
+
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 function LoginPage({isLoggedIn, onLogin}) {
     const [open, setOpen] = useState(true);
@@ -16,6 +21,15 @@ function LoginPage({isLoggedIn, onLogin}) {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
+
+
+    const [showPassword, setShowPassword] = useState(false);
+
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+  
+    const handleMouseDownPassword = (event) => {
+      event.preventDefault();
+    };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -43,7 +57,8 @@ function LoginPage({isLoggedIn, onLogin}) {
     }, [isLoggedIn, navigate]);
 
       const handleLogin = async (username, password) => {
-        await axios.post('/api/login/', 
+        const url = localStorage.getItem(BASE_URL);
+        await axios.post(`${url}/api/login/` , 
           { 
             username: username, 
             password: password,
@@ -55,6 +70,7 @@ function LoginPage({isLoggedIn, onLogin}) {
                 localStorage.setItem(STORAGE_KEY_AUTH, res.data.token);
                 onLogin(true, "admin");
                 navigate('/');
+                window.location.reload();
             }
             else{
               // Password is incorrect!
@@ -72,14 +88,14 @@ function LoginPage({isLoggedIn, onLogin}) {
         <form onSubmit={handleSubmit}>
             <DialogTitle sx={{marginTop: "20px"}}>
                 <div>
-                <Typography variant="h4">Log in</Typography>
-                <Typography variant="subtitle1" gutterBottom>Welcome to Smart Line Notify web application</Typography>
+                <Typography variant="h4">ลงชื่อเข้าใช้</Typography>
+                <Typography variant="subtitle1" gutterBottom>ยินดีต้อนรับสู่ Smart Line Notify</Typography>
                 </div>
             </DialogTitle>
             <DialogContent>
                 <Stack  spacing={2}>
                     <Typography variant="overline" display="block" gutterBottom>
-                    Login
+                    ลงชื่อเข้าใช้งาน
                     </Typography>
                     <TextField onChange={(e) => setUsername(e.target.value)} 
                         label="Username"
@@ -87,14 +103,35 @@ function LoginPage({isLoggedIn, onLogin}) {
                         value={username}
                         variant="outlined"
                     />
-                    <TextField onChange={(e) => setPassword(e.target.value)} 
+                    {/* <TextField onChange={(e) => setPassword(e.target.value)} 
                         label="Password"
                         id="outlined-basic"
                         value={password}
                         variant="outlined"
                         type="password"
                         autoComplete="current-password"
-                    />
+                    /> */}
+                    <FormControl  variant="outlined">
+                        <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                        <OutlinedInput
+                            value={password} onChange={(e) => setPassword(e.target.value)} 
+                            id="outlined-adornment-password"
+                            type={showPassword ? 'text' : 'password'}
+                            endAdornment={
+                            <InputAdornment position="end">
+                                <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={handleClickShowPassword}
+                                onMouseDown={handleMouseDownPassword}
+                                edge="end"
+                                >
+                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </InputAdornment>
+                            }
+                            label="Password"
+                        />
+                    </FormControl>
                     {error !== '' ? (
                         <span style={{margin: "5px 0 0 0", fontSize: "12px", color: "red"}}>{error}</span>
                     ):
@@ -107,9 +144,9 @@ function LoginPage({isLoggedIn, onLogin}) {
                         {btnLogin ? (
                             <>
                             <Button variant="text" onClick={handleClose}
-                            sx={{padding: "10px 30px"}}>Back</Button>
+                            sx={{padding: "10px 30px"}}>กลับ</Button>
                             <Button type="submit" variant="contained" 
-                            sx={{padding: "10px 30px"}}>Login</Button>
+                            sx={{padding: "10px 30px"}}>ลงชื่อ</Button>
                             </>
                         ):(
                             <CircularProgress />

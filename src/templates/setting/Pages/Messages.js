@@ -15,7 +15,7 @@ function Messages() {
     const columns = [
         {
             field: 'action',
-            headerName: 'Action',
+            headerName: 'จัดการ',
             width: 120,
             disableColumnFilter: true,
             renderCell: (params) => (
@@ -39,11 +39,11 @@ function Messages() {
             ),
         },
         { field: 'id', headerName: 'ID', width: 50},
-        { field: 'topic', headerName: 'Topic', flex: 1, minWidth: 150, maxWidth: 200},
-        { field: 'description', headerName: 'Description', flex:1, minWidth: 150},
+        { field: 'topic', headerName: 'ข้อมความ', flex: 1, minWidth: 150, maxWidth: 200},
+        { field: 'description', headerName: 'รายละเอียด', flex:1, minWidth: 150},
         {
             field: 'sub_message',
-            headerName: 'Sub Message',
+            headerName: 'ข้อความย่อย',
             sortable: false,
             flex: 0.1,
             minWidth: 150,

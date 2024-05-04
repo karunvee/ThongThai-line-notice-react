@@ -38,15 +38,15 @@ function DeleteLineNotify({onDelete}) {
             onSubmit: (event) => handleSummit(event),
           }}
         >
-          <DialogTitle>Delete Group Line</DialogTitle>
+          <DialogTitle>ลบข้อมูลกลุ่มแชท</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Are you sure you want to delete this group line?
+            คุณต้องการลบข้อมูลนี้ใช่หรือไม่?
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit" variant="contained" sx={{backgroundColor: "red"}} >Delete</Button>
+            <Button onClick={handleClose}>ยกเลิก</Button>
+            <Button type="submit" variant="contained" sx={{backgroundColor: "red"}} >ยืนยัน</Button>
           </DialogActions>
         </Dialog>
       </React.Fragment>

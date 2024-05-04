@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import {STORAGE_KEY_AUTH} from './Config';
+import {STORAGE_KEY_AUTH, BASE_URL} from './Config';
 
 import ProtectedRoute from './ProtectRoute';
 import Navbar from './templates/Navbar/Navbar';
@@ -19,6 +19,10 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem(STORAGE_KEY_AUTH);
     setIsLoggedIn(!!token); // Check if token exists
+    if(!localStorage.getItem(BASE_URL)){
+      console.log('url was saved!' ,window.location.hostname);
+      localStorage.setItem(BASE_URL, `http://${window.location.hostname}:8070`);
+    }
   }, []);
 
 

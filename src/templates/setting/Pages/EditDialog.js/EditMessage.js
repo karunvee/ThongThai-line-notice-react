@@ -63,11 +63,10 @@ function EditMessage({data, onComplete}) {
             onSubmit: (event) => handleSummit(event),
           }}
         >
-          <DialogTitle>Edit Line Notify Group</DialogTitle>
+          <DialogTitle>แก้ไขข้อความ</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              To getting notification from this website, please enter your group name and token access here. We
-              will send updates occasionally.
+            โปรดกรอกข้อมูลข้อความ เพื่อที่ระบบจะสามารถส่งข้อความเหล่านี้ไปยังกลุ่มแชท
             </DialogContentText>
             <TextField
                 autoFocus
@@ -75,7 +74,7 @@ function EditMessage({data, onComplete}) {
                 margin="dense"
                 id="topic"
                 name="topic"
-                label="Topic"
+                label="ข้อความ"
                 value={topic}
                 fullWidth
                 variant="standard"
@@ -87,7 +86,7 @@ function EditMessage({data, onComplete}) {
                 margin="dense"
                 id="description"
                 name="description"
-                label="Description"
+                label="รายละเอียด"
                 value={description}
                 fullWidth
                 variant="standard"
@@ -95,8 +94,8 @@ function EditMessage({data, onComplete}) {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit" variant="contained" >Save</Button>
+            <Button onClick={handleClose}>ยกเลิก</Button>
+            <Button type="submit" variant="contained" >บันทึก</Button>
           </DialogActions>
         </Dialog>
       </React.Fragment>

@@ -49,7 +49,7 @@ function AddFloor({buildingId, onComplete, disabled}) {
         tabIndex={-1}
         startIcon={<AddIcon />}
             >
-                Add
+                เพิ่ม
         </Button>
         <Dialog
           open={open}
@@ -59,10 +59,10 @@ function AddFloor({buildingId, onComplete, disabled}) {
             onSubmit: (event) => handleSummit(event),
           }}
         >
-          <DialogTitle>Add Floor</DialogTitle>
+          <DialogTitle>เพิ่มข้อมูลชั้น</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              To specific exactly where is floor inform the messages, please enter you floor here.
+            สำหรับระบุตำแหน่งของชั้นในการส่งข้อความ โปรดกรอกข้อมูลด้านล่าง
             </DialogContentText>
             <TextField
                 autoFocus
@@ -70,14 +70,14 @@ function AddFloor({buildingId, onComplete, disabled}) {
                 margin="dense"
                 id="floor_name"
                 name="floor_name"
-                label="Floor Name"
+                label="ชื่อชั้น"
                 fullWidth
                 variant="standard"
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit" variant="contained" >Save</Button>
+            <Button onClick={handleClose}>ยกเลิก</Button>
+            <Button type="submit" variant="contained" >บันทึก</Button>
           </DialogActions>
         </Dialog>
       </React.Fragment>

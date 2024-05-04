@@ -50,15 +50,15 @@ function DeleteBuilding({data, onComplete}) {
             onSubmit: (event) => handleSummit(event),
           }}
         >
-          <DialogTitle>Delete Building</DialogTitle>
+          <DialogTitle>ลบข้อมูลอาคาร</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Are you sure? you want to delete <span  style={{ color: 'var(--primary-color)'}}>{data.building_name}.</span>
+              คุณต้องการลบข้อมูลนี้ใช่หรือไม่? <span  style={{ color: 'var(--primary-color)'}}>{data.building_name}.</span>
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit" variant="contained" sx={{backgroundColor: "red"}} >Delete</Button>
+            <Button onClick={handleClose}>ยกเลิก</Button>
+            <Button type="submit" variant="contained" sx={{backgroundColor: "red"}} >ยืนยัน</Button>
           </DialogActions>
         </Dialog>
       </React.Fragment>

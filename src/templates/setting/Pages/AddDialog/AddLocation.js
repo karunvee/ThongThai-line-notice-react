@@ -50,7 +50,7 @@ function AddLocation({floorId, onComplete, disabled}) {
         tabIndex={-1}
         startIcon={<AddIcon />}
             >
-                Add
+                เพิ่ม
         </Button>
         <Dialog
           open={open}
@@ -60,10 +60,10 @@ function AddLocation({floorId, onComplete, disabled}) {
             onSubmit: (event) => handleSummit(event),
           }}
         >
-          <DialogTitle>Add Location</DialogTitle>
+          <DialogTitle>เพิ่มข้อมูลตำแหน่ง</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              To specific exactly where is location inform the messages, please enter you location here.
+            สำหรับระบุตำแหน่งในการส่งข้อความ โปรดกรอกข้อมูลด้านล่าง
             </DialogContentText>
             <TextField
                 autoFocus
@@ -71,14 +71,14 @@ function AddLocation({floorId, onComplete, disabled}) {
                 margin="dense"
                 id="location_name"
                 name="location_name"
-                label="Location Name"
+                label="ชื่อตำแหน่ง"
                 fullWidth
                 variant="standard"
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit" variant="contained" >Save</Button>
+            <Button onClick={handleClose}>ยกเลิก</Button>
+            <Button type="submit" variant="contained" >บันทึก</Button>
           </DialogActions>
         </Dialog>
       </React.Fragment>

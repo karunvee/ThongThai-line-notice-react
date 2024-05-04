@@ -61,7 +61,7 @@ function AddMessage({onComplete}) {
         tabIndex={-1}
         startIcon={<AddIcon />}
             >
-                Add
+                เพิ่ม
         </Button>
         <Dialog
           open={open}
@@ -71,11 +71,10 @@ function AddMessage({onComplete}) {
             onSubmit: (event) => handleSummit(event),
           }}
         >
-          <DialogTitle>Add Message</DialogTitle>
+          <DialogTitle>เพิ่มข้อความ</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              To getting notification from this website, please enter your message detail here. We
-              will send updates occasionally.
+              โปรดกรอกข้อมูลข้อความ เพื่อที่ระบบจะสามารถส่งข้อความเหล่านี้ไปยังกลุ่มแชท
             </DialogContentText>
             <TextField
                 autoFocus
@@ -83,7 +82,7 @@ function AddMessage({onComplete}) {
                 margin="dense"
                 id="topic"
                 name="topic"
-                label="Topic"
+                label="ข้อความ"
                 fullWidth
                 variant="standard"
                 onChange={handleTopicChange}
@@ -94,15 +93,15 @@ function AddMessage({onComplete}) {
                 margin="dense"
                 id="description"
                 name="description"
-                label="Description"
+                label="รายละเอียด"
                 fullWidth
                 variant="standard"
                 onChange={handleDescChange}
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button type="submit" variant="contained" >Save</Button>
+            <Button onClick={handleClose}>ยกเลิก</Button>
+            <Button type="submit" variant="contained" >บันทึก</Button>
           </DialogActions>
         </Dialog>
       </React.Fragment>

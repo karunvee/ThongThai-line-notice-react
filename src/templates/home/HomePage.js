@@ -46,12 +46,13 @@ function HomePage() {
         }
     }, [loaded]);
 
-    const handleClickMessage = (message, id) => {
+    const handleClickMessage = (message) => {
         setOpen(true);
-        setMessageData(message);
-        setMessageId(id);
+        console.log(message);
+        setMessageData(message.topic);
+        setMessageId(message.id);
 
-        axios.get('/api/sub_message/list/', { params: { message_id: id} })
+        axios.get('/api/sub_message/list/', { params: { message_id: message.id} })
         .then((res) => {
             console.log(res.data.data)
             setSubMessage(res.data.data);
@@ -106,12 +107,96 @@ function HomePage() {
     }
     
     return ( 
-        <div className="HomePage">            
+        <div className="HomePage">  
+        <React.Fragment>
+            <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    PaperProps={{
+                        component: 'form',
+                        onSubmit: (e) => handleSendMessage(e),
+                    }}>
+                <DialogTitle>เพิ่มเติม</DialogTitle>
+                <DialogContent>
+                <div style={{display: 'flex', flexDirection:'column', alignItems: 'center'}} >
+                    <div>
+                        <ToggleButtonGroup
+                            // orientation="vertical"
+                            orientation="horizontal"
+                            value={gender}
+                            exclusive
+                            onChange={handleGenderChange}
+                            aria-label="gender"
+                            sx={{
+                                '& .css-13o3fyx-MuiButtonBase-root-MuiToggleButton-root.Mui-selected':{
+                                    color: "#fff",
+                                    backgroundColor: "#306dca85",
+                                }
+                            }}
+                            >
+                            <ToggleButton value="ชาย" aria-label="male" sx={{ padding: "20px"}}>
+                                <ManIcon sx={{fontSize: "100px"}}/>
+                            </ToggleButton>
+                            <ToggleButton value="หญิง" aria-label="female" sx={{ padding: "20px"}}>
+                                <WomanIcon sx={{fontSize: "100px"}} />
+                            </ToggleButton>  
+                        </ToggleButtonGroup>
+                    </div>
+                    <div style={{ marginTop: '20px'}}>
+                    <FormControl>
+                    <ToggleButtonGroup
+                            // orientation="vertical"
+                            orientation="horizontal"
+                            value={subMessageId}
+                            exclusive
+                            onChange={handleSubChange}
+                            aria-label="submessage"
+                            sx={{
+                                '& .css-9571sr-MuiButtonBase-root-MuiToggleButton-root.Mui-selected':{
+                                    color: "#fff",
+                                    backgroundColor: "#306dca85",
+                                }
+                            }}
+                            >
+                                 {subMessage && (
+                                    subMessage?.map((s_msg, index) => 
+                                        <ToggleButton key={s_msg.id+'/'+index + s_msg.detail} value={s_msg.id} aria-label="item" sx={{ padding: "10px 15px"}} >
+                                            {s_msg.detail}
+                                        </ToggleButton>
+                                    )
+                                )}
+                                <ToggleButton value="other" aria-label="item" sx={{ padding: "10px 15px"}}>
+                                อื่นๆ
+                                </ToggleButton>
+                        </ToggleButtonGroup>
+
+                            {/* <RadioGroup row
+                                aria-labelledby="demo-radio-buttons-group-label"
+                                defaultValue="other"
+                                name="radio-buttons-group"
+                                onChange={handleSubChange}
+                            >
+                                {subMessage && (
+                                    subMessage?.map((s_msg, index) => 
+                                        <FormControlLabel key={s_msg.id+'/'+index + s_msg.detail} value={s_msg.id} control={<Radio />} label={s_msg.detail} />
+                                    )
+                                )}
+                                <FormControlLabel value="other" control={<Radio />} label="อื่นๆ" />
+                            </RadioGroup> */}
+                        </FormControl>
+                    </div>
+                </div>
+                </DialogContent>
+                <DialogActions sx={{justifyContent: "space-between"}}>
+                    <Button onClick={handleClose}>ยกเลิก</Button>
+                    <Button type="submit" variant="contained" disabled={!gender||!subMessageId} sx={{width: "100%", padding: "10px 5px"}}>ส่ง</Button>
+                </DialogActions>
+            </Dialog>      
+            </React.Fragment>    
             {data && (
                 data.map((message, index) =>
-                    <React.Fragment key={message.id + index}>
                     <Card key={message.id + index} sx={{height: 150}} >
-                        <CardActionArea sx={{height: "100%", backgroundColor: 'var(--card-color)'}} onClick={() => handleClickMessage(message.topic, message.id)}>
+                        <CardActionArea sx={{height: "100%", backgroundColor: 'var(--card-color)'}} onClick={() => handleClickMessage(message)}>
                             <CardContent>
                                 <div style={{display: 'flex', color: 'var(--primary-color)', alignItems: 'center', gap: 6}}>
                                 <Typography variant="caption" display="block" >
@@ -131,65 +216,6 @@ function HomePage() {
                     
                         </CardActionArea>
                     </Card>
-                    <Dialog
-                        key={'dialog' + message.id + index}
-                        open={open}
-                        onClose={handleClose}
-                        PaperProps={{
-                            component: 'form',
-                            onSubmit: (e) => handleSendMessage(e),
-                        }}>
-                    <DialogTitle>เพิ่มเติม</DialogTitle>
-                    <DialogContent>
-                    <Grid container spacing={5}>
-                        <Grid item xs={6}>
-                            <ToggleButtonGroup
-                                orientation="vertical"
-                                value={gender}
-                                exclusive
-                                onChange={handleGenderChange}
-                                aria-label="gender"
-                                >
-                                <ToggleButton value="ชาย" aria-label="male" sx={{ padding: "50px"}}>
-                                    <ManIcon sx={{scale: '3'}}/>
-                                </ToggleButton>
-                                <ToggleButton value="หญิง" aria-label="female" sx={{ padding: "50px"}}>
-                                    <WomanIcon sx={{scale: '3'}} />
-                                </ToggleButton>  
-                            </ToggleButtonGroup>
-                        </Grid>
-                        <Grid item xs={6}>
-                        <FormControl>
-                            {/* <FormLabel id="demo-radio-buttons-group-label">Sub Message</FormLabel> */}
-                                <RadioGroup
-                                    aria-labelledby="demo-radio-buttons-group-label"
-                                    defaultValue="other"
-                                    name="radio-buttons-group"
-                                    onChange={handleSubChange}
-                                >
-                                    {subMessage && (
-                                        subMessage.map((s_msg, index) => 
-                                            <FormControlLabel key={s_msg.id+'/'+index + s_msg.detail} value={s_msg.id} control={<Radio />} label={s_msg.detail} />
-                                        )
-                                    )}
-                                    <FormControlLabel value="other" control={<Radio />} label="Other" />
-                                </RadioGroup>
-                            </FormControl>
-                        </Grid>
-                    </Grid>
-                    
-
-                    </DialogContent>
-                    <DialogActions >
-                        <Button onClick={handleClose}>ยกเลิก</Button>
-                        {gender &&(
-                            <Button type="submit" variant="contained" >ส่ง</Button>
-                        )}
-                        
-                    </DialogActions>
-                    </Dialog>
-                    </React.Fragment>
-                    
                 )
             )}
         </div>
