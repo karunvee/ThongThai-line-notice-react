@@ -75,7 +75,7 @@ function HomePage() {
         e.preventDefault();
         const message = messageData;
         const id = messageId;
-        const sub_message_ud = subMessageId;
+        const sub_message_ud = subMessageId === "other" ? '':subMessageId;
         const gender_ = gender;
         const token = localStorage.getItem(STORAGE_KEY_AUTH);
         const payload = {
@@ -128,9 +128,13 @@ function HomePage() {
                             onChange={handleGenderChange}
                             aria-label="gender"
                             sx={{
-                                '& .css-13o3fyx-MuiButtonBase-root-MuiToggleButton-root.Mui-selected':{
-                                    color: "#fff",
-                                    backgroundColor: "#306dca85",
+                                '& *.Mui-selected':{
+                                    color: "#fff !important",
+                                    backgroundColor: "#306dca !important",
+                                },
+                                '& *:hover':{
+                                    color: "#fff !important",
+                                    backgroundColor: "#306dca !important",
                                 }
                             }}
                             >
@@ -152,9 +156,13 @@ function HomePage() {
                             onChange={handleSubChange}
                             aria-label="submessage"
                             sx={{
-                                '& .css-9571sr-MuiButtonBase-root-MuiToggleButton-root.Mui-selected':{
-                                    color: "#fff",
-                                    backgroundColor: "#306dca85",
+                                '& *.Mui-selected':{
+                                    color: "#fff !important",
+                                    backgroundColor: "#306dca !important",
+                                },
+                                '& *:hover':{
+                                    color: "#fff !important",
+                                    backgroundColor: "#306dca !important",
                                 }
                             }}
                             >
